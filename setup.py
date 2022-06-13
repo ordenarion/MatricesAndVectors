@@ -6,8 +6,8 @@ module1 = Extension(
 )
 
 setup(
-    name='data_table',
-    version='1.2',
+    name='vectors_and_matrices',
+    version='1.0',
     description='',
     ext_modules=[module1]
 )
