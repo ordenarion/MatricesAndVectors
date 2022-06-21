@@ -1,7 +1,7 @@
 from distutils.core import setup, Extension
 
 module1 = Extension(
-    'vectors_and_matrices',  # module name in interpreter
+    'vectors_and_matrices',
     sources=[]
 )
 
