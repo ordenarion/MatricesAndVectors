@@ -10,19 +10,9 @@ void vector_free(vector* v)
 {
     free(v->data);
     Py_XDECREF(v);
-    Py_TYPE(self)->tp_free((PyObject*)v);
+    Py_TYPE(v)->tp_free((PyObject*)v);
     free(v);
 
-}
-
-static PyObject* new_vector(PyObject *self, PyObject *args)
-{
-    int n;
-    if (!PyArg_ParseTuple(args, "i", &n))
-        return NULL;
-    vector* v = PyObject_NEW(vector, &vector_Type);
-    vector_init(v, n);
-    return v;
 }
 
 double get_v_elem(vector* v, int i)
@@ -59,10 +49,12 @@ vector* get_zero_vec(int length)
     return v;
 }
 
-static PyObject *print_vector(PyObject* a)
+PyObject *print_vector(PyObject* a)
 {
     vector* v = (vector*)a;
     for (int i = 0; i<v->length; ++i) {
         printf("%*f", 10, get_v_elem(v, i));
     }
+    Py_INCREF(Py_None);
+    return Py_None;
 }

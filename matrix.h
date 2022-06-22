@@ -1,8 +1,10 @@
 #ifndef MATRIX
 #define MATRIX
+
 #include <Python.h>
 #include <stdlib.h>
-#include <time>
+#include <time.h>
+#define DSIZE  sizeof(double)
 typedef struct
 {
     PyObject_HEAD
@@ -10,5 +12,14 @@ typedef struct
     int n;
     int m;
 } matrix;
+
+void matrix_init(matrix* mat, int n, int m);
+void matrix_free(matrix* mat);
+double get_mat_elem(matrix* mat, int i, int j);
+double set_mat_elem(matrix* mat, int i, int j, double elem);
+matrix* get_random_mat(int n, int m, int l, int r);
+matrix* get_zero_mat(int n, int m);
+matrix* get_id_mat(int n);
+PyObject *print_matrix(PyObject* a);
 
 #endif
