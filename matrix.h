@@ -20,6 +20,10 @@ double set_mat_elem(matrix* mat, int i, int j, double elem);
 matrix* get_random_mat(int n, int m, int l, int r);
 matrix* get_zero_mat(int n, int m);
 matrix* get_id_mat(int n);
-PyObject *print_matrix(PyObject* a);
+PyMethodDef matrix_methods[];
+PyTypeObject matrix_Type;
+matrix* new_matrix(PyObject* a, PyObject* args);
+PyObject *print_matrix(PyObject* a, PyObject *args);
+matrix* _new_matrix(int n, int m);
 
 #endif
