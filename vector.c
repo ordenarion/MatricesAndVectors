@@ -7,6 +7,12 @@ PyMethodDef vector_methods[] = {
         METH_VARARGS,
         "Print vector"
     },
+    {
+        "fill",
+        fill_vector,
+        METH_VARARGS,
+        "Fill vector"
+    },
     {NULL, NULL, 0, NULL}
 };
 
@@ -20,13 +26,6 @@ PyTypeObject vector_Type = {
     .tp_methods = vector_methods,
 };
 
-vector* new_vector(PyObject *self, PyObject *args)
-{
-    int n;
-    if (!PyArg_ParseTuple(args, "i", &n))
-        return NULL;
-    return get_zero_vec(n);
-}
 
 vector* _new_vector(int length)
 {
@@ -62,7 +61,7 @@ double set_v_elem(vector* v, int i, double elem)
     return old_elem;
 }
 
-vector* get_random_vec(int length, int l, int r)
+vector* get_random_vec(int length, double l, double r)
 {
     vector* v = _new_vector(length);
     srand(time(NULL));
@@ -82,6 +81,25 @@ vector* get_zero_vec(int length)
     return v;
 }
 
+// -----------------------------------------------------------------------------------------------------------------
+vector* new_vector(PyObject *self, PyObject *args)
+{
+    int n;
+    if (!PyArg_ParseTuple(args, "i", &n))
+        return NULL;
+    return get_zero_vec(n);
+}
+
+vector* rand_new_vector(PyObject *self, PyObject *args)
+{
+    int n;
+    double l, r;
+    if (!PyArg_ParseTuple(args, "idd", &n, &l, &r))
+        return NULL;
+    return get_random_vec(n, l, r);
+}
+
+// -----------------------------------------------------------------------------------------------------------------
 PyObject *print_vector(PyObject* a, PyObject *args)
 {
     vector* v = (vector*)a;
@@ -92,3 +110,49 @@ PyObject *print_vector(PyObject* a, PyObject *args)
     Py_INCREF(Py_None);
     return Py_None;
 }
+
+PyObject *fill_vector(PyObject* a, PyObject *args)
+{
+    Py_INCREF(Py_None);
+    vector* self = (vector*)a;
+    PyObject *pList;
+    PyObject *pItem;
+    Py_ssize_t n;
+    if (!PyArg_ParseTuple(args, "O!", &PyList_Type, &pList)) {
+        PyErr_SetString(PyExc_TypeError, "parameter must be a list.");
+        return NULL;
+    }
+    n = PyList_Size(pList);
+    if (n!=(self->length)) {
+        PyErr_SetString(PyExc_TypeError, "Invalid size");
+        return NULL;
+    }
+    const char* st = PyList_GetItem(pList, 0)->ob_type->tp_name;
+    if (strcmp("float", st)!=0 && strcmp("int", st)!=0){
+            PyErr_SetString(PyExc_TypeError, "parameter must be a int or float");
+            return NULL;
+    }
+    if (strcmp("int", st)==0) {
+        for (int i=0; i<n; i++) {
+            pItem = PyList_GetItem(pList, i);
+            int s = PyLong_AsLong(pItem);
+            set_v_elem(self, i, s);
+        }
+    } else if (strcmp("float", st)==0) {
+        for (int i=0; i<n; i++) {
+            pItem = PyList_GetItem(pList, i);
+            double s = PyFloat_AsDouble(pItem);
+            set_v_elem(self, i, s);
+        }
+    }
+    return Py_None;
+}
+
+PyObject* norm(PyObject* a)
+{
+    vector* v = (vector*)a;
+    Py_INCREF(Py_None);
+    return Py_None;
+    //Py_BuildValue("i", size);
+}
+

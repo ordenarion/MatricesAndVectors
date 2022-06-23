@@ -6,13 +6,31 @@ static PyMethodDef own_methods[] = {
         "vector",
         new_vector,
         METH_VARARGS,
-        "New column"
+        "New vector"
     },
     {
         "matrix",
         new_matrix,
         METH_VARARGS,
-        "New table"
+        "New matrix"
+    },
+    {
+        "rand_vector",
+        rand_new_vector,
+        METH_VARARGS,
+        "New vector"
+    },
+    {
+        "rand_matrix",
+        rand_new_matrix,
+        METH_VARARGS,
+        "New matrix"
+    },
+    {
+        "eye",
+        eye,
+        METH_VARARGS,
+        "Identity matrix"
     },
     {NULL, NULL, 0, NULL}
 };

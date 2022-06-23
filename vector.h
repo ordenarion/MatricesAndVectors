@@ -23,5 +23,7 @@ vector* new_vector(PyObject *self, PyObject *args);
 vector* _new_vector(int length);
 PyMethodDef vector_methods[];
 PyTypeObject vector_Type;
-
+vector* rand_new_vector(PyObject *self, PyObject *args);
+PyObject* norm(PyObject* a);
+PyObject *fill_vector(PyObject* a, PyObject *args);
 #endif
