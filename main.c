@@ -2,36 +2,24 @@
 
 
 static PyMethodDef own_methods[] = {
-    {
-        "vector",
-        new_vector,
-        METH_VARARGS,
-        "New vector"
-    },
-    {
-        "matrix",
-        new_matrix,
-        METH_VARARGS,
-        "New matrix"
-    },
-    {
-        "rand_vector",
-        rand_new_vector,
-        METH_VARARGS,
-        "New vector"
-    },
-    {
-        "rand_matrix",
-        rand_new_matrix,
-        METH_VARARGS,
-        "New matrix"
-    },
-    {
-        "eye",
-        eye,
-        METH_VARARGS,
-        "Identity matrix"
-    },
+    { "vector", new_vector, METH_VARARGS, "New vector" },
+    { "matrix", new_matrix, METH_VARARGS, "New matrix" },
+    { "rand_vector", rand_new_vector, METH_VARARGS, "New vector" },
+    { "rand_matrix", rand_new_matrix, METH_VARARGS, "New matrix" },
+    { "eye", eye, METH_VARARGS, "Identity matrix"  },
+
+    { "norm", norm, METH_VARARGS, "norm matrix"  },
+//    { "VxR", VxR, METH_VARARGS, "VxR"  },
+//    { "VplusV", VplusV, METH_VARARGS, "VplusV"  },
+//    { "VminusV", VminusV, METH_VARARGS, "VminusV"  },
+//    { "VdotV", VdotV, METH_VARARGS, "VdotV"  },
+//    { "VxV", VxV, METH_VARARGS, "VxV"  },
+//    { "MxR", MxR, METH_VARARGS, "MxR"  },
+//    { "MplusM", MplusM, METH_VARARGS, "MplusM"  },
+//    { "MminusM", MminusM, METH_VARARGS, "MminusM"  },
+//    { "MxV", MxV, METH_VARARGS, "MxV"  },
+//    { "MxM", MxM, METH_VARARGS, "MxM"  },
+//    { "MRot", MRot, METH_VARARGS, "MRot"  },
     {NULL, NULL, 0, NULL}
 };
 

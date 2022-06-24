@@ -13,6 +13,12 @@ PyMethodDef vector_methods[] = {
         METH_VARARGS,
         "Fill vector"
     },
+    {
+        "len",
+        len,
+        METH_VARARGS,
+        "len of vector"
+    },
     {NULL, NULL, 0, NULL}
 };
 
@@ -148,11 +154,9 @@ PyObject *fill_vector(PyObject* a, PyObject *args)
     return Py_None;
 }
 
-PyObject* norm(PyObject* a)
+PyObject* len(PyObject* self, PyObject *args)
 {
-    vector* v = (vector*)a;
-    Py_INCREF(Py_None);
-    return Py_None;
-    //Py_BuildValue("i", size);
+    vector* v = (vector*)self;
+    return Py_BuildValue("i", v->length);
 }
 

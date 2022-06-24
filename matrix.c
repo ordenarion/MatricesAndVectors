@@ -13,6 +13,12 @@ PyMethodDef matrix_methods[] = {
         METH_VARARGS,
         "Fill matrix"
     },
+    {
+        "shape",
+        shape,
+        METH_VARARGS,
+        "shape of matrix"
+    },
     {NULL, NULL, 0, NULL}
 };
 
@@ -178,4 +184,10 @@ PyObject *fill_matrix(PyObject* a, PyObject *args)
         }
     }
     return Py_None;
+}
+
+PyObject *shape(PyObject* self, PyObject *args)
+{
+    matrix* mat = (matrix*)self;
+    return Py_BuildValue("(ii)", mat->n, mat->m);
 }

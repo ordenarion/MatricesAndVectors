@@ -2,7 +2,7 @@ from distutils.core import setup, Extension
 
 module1 = Extension(
     'vectors_and_matrices',
-    sources=['main.c', 'matrix.c', 'vector.c']
+    sources=['main.c', 'matrix.c', 'vector.c', 'linear_functions.c']
 )
 
 setup(

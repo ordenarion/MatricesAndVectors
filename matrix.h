@@ -28,5 +28,6 @@ matrix* _new_matrix(int n, int m);
 matrix* rand_new_matrix(PyObject* a, PyObject* args);
 matrix* eye(PyObject* a, PyObject* args);
 PyObject *fill_matrix(PyObject* a, PyObject *args);
+PyObject *shape(PyObject* a, PyObject *args);
 
 #endif
