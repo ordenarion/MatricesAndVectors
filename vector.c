@@ -70,7 +70,6 @@ double set_v_elem(vector* v, int i, double elem)
 vector* get_random_vec(int length, double l, double r)
 {
     vector* v = _new_vector(length);
-    srand(time(NULL));
     for (int i = 0; i<length; ++i){
         double el = (double)rand() / (double)RAND_MAX * (r-l) + l;
         set_v_elem(v, i, el);

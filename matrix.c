@@ -72,7 +72,6 @@ double set_mat_elem(matrix* mat, int i, int j, double elem)
 matrix* get_random_mat(int n, int m, double l, double r)
 {
     matrix* mat = _new_matrix(n, m);
-    srand(time(NULL));
     for (int i = 0; i<n; ++i)
         for (int j = 0; j<m; ++j){
             double el = (double)rand() / (double)RAND_MAX * (r-l) + l;
