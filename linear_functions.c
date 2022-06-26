@@ -15,8 +15,39 @@ PyObject* norm(PyObject* a, PyObject *args)
     }
     return Py_BuildValue("d", sqrt(n));
 }
-//PyObject* VxR(PyObject* a, PyObject *args);
-//PyObject* VplusV(PyObject* a, PyObject *args);
+
+PyObject* VxR(PyObject* a, PyObject *args)
+{
+    vector* v;
+    double r;
+    if (!PyArg_ParseTuple(args, "O!d", &vector_Type, &v, &r)) {
+        PyErr_SetString(PyExc_TypeError, "parameters must be a vector and a double.");
+        return NULL;
+    }
+    vector* new_v = _new_vector(v->length);
+    for (int i = 0; i<v->length; ++i){
+        set_v_elem(new_v, i, get_v_elem(v, i)*r);
+    }
+    return new_v;
+}
+
+PyObject* VplusV(PyObject* a, PyObject *args)
+{
+    vector *v, *w;
+    if (!PyArg_ParseTuple(args, "O!O!", &vector_Type, &v, &vector_Type, &w)) {
+        PyErr_SetString(PyExc_TypeError, "parameters must be a vector and a vector.");
+        return NULL;
+    }
+    if ((v->length)!=(w->length)) {
+        PyErr_SetString(PyExc_TypeError, "Invalid size");
+        return NULL;
+    }
+    vector* new_v = _new_vector(v->length);
+    for (int i = 0; i<v->length; ++i){
+        set_v_elem(new_v, i, get_v_elem(v, i)+get_v_elem(w, i));
+    }
+    return new_v;
+}
 //PyObject* VminusV(PyObject* a, PyObject *args);
 //PyObject* VdotV(PyObject* a, PyObject *args);
 //PyObject* VxV(PyObject* a, PyObject *args);

@@ -9,8 +9,8 @@ static PyMethodDef own_methods[] = {
     { "eye", eye, METH_VARARGS, "Identity matrix"  },
 
     { "norm", norm, METH_VARARGS, "norm matrix"  },
-//    { "VxR", VxR, METH_VARARGS, "VxR"  },
-//    { "VplusV", VplusV, METH_VARARGS, "VplusV"  },
+    { "VxR", VxR, METH_VARARGS, "VxR"  },
+    { "VplusV", VplusV, METH_VARARGS, "VplusV"  },
 //    { "VminusV", VminusV, METH_VARARGS, "VminusV"  },
 //    { "VdotV", VdotV, METH_VARARGS, "VdotV"  },
 //    { "VxV", VxV, METH_VARARGS, "VxV"  },
