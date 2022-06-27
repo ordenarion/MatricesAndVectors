@@ -26,4 +26,7 @@ PyTypeObject vector_Type;
 vector* rand_new_vector(PyObject *self, PyObject *args);
 PyObject* len(PyObject* self, PyObject *args);
 PyObject *fill_vector(PyObject* a, PyObject *args);
+PyObject* get_v(PyObject* self, PyObject *args);
+PyObject* set_v(PyObject* self, PyObject *args);
+
 #endif

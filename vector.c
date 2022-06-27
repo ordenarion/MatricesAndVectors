@@ -20,6 +20,18 @@ PyMethodDef vector_methods[] = {
         METH_VARARGS,
         "len of vector"
     },
+    {
+        "get",
+        get_v,
+        METH_VARARGS,
+        "getter of vector"
+    },
+    {
+        "set",
+        set_v,
+        METH_VARARGS,
+        "setter of vector"
+    },
     {NULL, NULL, 0, NULL}
 };
 
@@ -174,3 +186,28 @@ PyObject* len(PyObject* self, PyObject *args)
     return Py_BuildValue("i", v->length);
 }
 
+// выдача элемента по индексу
+PyObject* get_v(PyObject* self, PyObject *args)
+{
+    int i;
+    if (!PyArg_ParseTuple(args, "i", &i)) {
+        PyErr_SetString(PyExc_TypeError, "parameters must be int.");
+        return NULL;
+    }
+    vector* v = (vector*)self;
+    return Py_BuildValue("d", get_v_elem(v, i));
+}
+
+// установить заданный элемент по индексу
+PyObject* set_v(PyObject* self, PyObject *args)
+{
+    int i;
+    double d;
+    if (!PyArg_ParseTuple(args, "id", &i, &d)) {
+        PyErr_SetString(PyExc_TypeError, "parameters must be int, int, double.");
+        return NULL;
+    }
+    vector* v = (vector*)self;
+    double oldv = set_v_elem(v, i, d);
+    return Py_BuildValue("d", oldv);
+}

@@ -20,6 +20,18 @@ PyMethodDef matrix_methods[] = {
         METH_VARARGS,
         "shape of matrix"
     },
+    {
+        "get",
+        get_m,
+        METH_VARARGS,
+        "getter of matrix"
+    },
+    {
+        "set",
+        set_m,
+        METH_VARARGS,
+        "setter of matrix"
+    },
     {NULL, NULL, 0, NULL}
 };
 
@@ -206,4 +218,30 @@ PyObject *shape(PyObject* self, PyObject *args)
 {
     matrix* mat = (matrix*)self;
     return Py_BuildValue("(ii)", mat->n, mat->m);
+}
+
+// выдача элемента по индексу
+PyObject* get_m(PyObject* self, PyObject *args)
+{
+    int i, j;
+    if (!PyArg_ParseTuple(args, "ii", &i, &j)) {
+        PyErr_SetString(PyExc_TypeError, "parameters must be int.");
+        return NULL;
+    }
+    matrix* v = (matrix*)self;
+    return Py_BuildValue("d", get_mat_elem(v, i, j));
+}
+
+// установить заданный элемент по индексу
+PyObject* set_m(PyObject* self, PyObject *args)
+{
+    int i, j;
+    double d;
+    if (!PyArg_ParseTuple(args, "iid", &i, &j, &d)) {
+        PyErr_SetString(PyExc_TypeError, "parameters must be int, int, double.");
+        return NULL;
+    }
+    matrix* v = (matrix*)self;
+    double oldv = set_mat_elem(v, i, j, d);
+    return Py_BuildValue("d", oldv);
 }
