@@ -1,5 +1,6 @@
 #include "matrix.h"
 
+// методы, которые будут доступны у объекта matrix
 PyMethodDef matrix_methods[] = {
     {
         "print",
@@ -22,6 +23,7 @@ PyMethodDef matrix_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+// определение типа matrix_Type
 PyTypeObject matrix_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_name = "matrix",
@@ -32,6 +34,7 @@ PyTypeObject matrix_Type = {
     .tp_methods = matrix_methods,
 };
 
+// вспомогательный метод для создания матрицы
 matrix* _new_matrix(int n, int m)
 {
     matrix* mat = PyObject_NEW(matrix, &matrix_Type);
@@ -39,6 +42,7 @@ matrix* _new_matrix(int n, int m)
     return mat;
 }
 
+// метод инициализации матрицы
 void matrix_init(matrix* mat, int n, int m)
 {
     mat->data = malloc(DSIZE * n * m);
@@ -46,6 +50,7 @@ void matrix_init(matrix* mat, int n, int m)
     mat->m = m;
 }
 
+// метод очистки матрицы
 void matrix_free(matrix* mat)
 {
     free(mat->data);
@@ -53,13 +58,14 @@ void matrix_free(matrix* mat)
     Py_TYPE(mat)->tp_free((PyObject*)mat);
 }
 
+// геттер элемента с индексами i и j
 double get_mat_elem(matrix* mat, int i, int j)
 {
     i = i%(mat->n);
     j = j%(mat->m);
     return mat->data[i*(mat->m) + j];
 }
-
+// cеттер элемента с индексами i и j
 double set_mat_elem(matrix* mat, int i, int j, double elem)
 {
     i = i%(mat->n);
@@ -69,6 +75,7 @@ double set_mat_elem(matrix* mat, int i, int j, double elem)
     return old_elem;
 }
 
+// функция, выдающая матрицу, заполненную случайными числами
 matrix* get_random_mat(int n, int m, double l, double r)
 {
     matrix* mat = _new_matrix(n, m);
@@ -80,6 +87,7 @@ matrix* get_random_mat(int n, int m, double l, double r)
     return mat;
 }
 
+// функция, выдающая матрицу, заполненную нулями
 matrix* get_zero_mat(int n, int m)
 {
     matrix* mat = _new_matrix(n, m);
@@ -89,7 +97,7 @@ matrix* get_zero_mat(int n, int m)
         }
     return mat;
 }
-
+// функция, выдающая единичную матрицу
 matrix* get_id_mat(int n)
 {
     matrix* mat = get_zero_mat(n, n);
@@ -97,7 +105,9 @@ matrix* get_id_mat(int n)
     return mat;
 }
 
+// далее методы инициализации объектов python
 // -----------------------------------------------------------------------------------------------------------------
+// нулевая матрица (по умолчанию будет нулевая)
 matrix* new_matrix(PyObject* a, PyObject* args)
 {
     int n, m;
@@ -106,6 +116,7 @@ matrix* new_matrix(PyObject* a, PyObject* args)
     return get_zero_mat(n, m);
 }
 
+// случайная матрица
 matrix* rand_new_matrix(PyObject* a, PyObject* args)
 {
     int n, m;
@@ -115,6 +126,7 @@ matrix* rand_new_matrix(PyObject* a, PyObject* args)
     return get_random_mat(n, m, l, r);
 }
 
+// единичная матрица
 matrix* eye(PyObject* a, PyObject* args)
 {
     int n;
@@ -122,8 +134,10 @@ matrix* eye(PyObject* a, PyObject* args)
         return NULL;
     return get_id_mat(n);
 }
-// -----------------------------------------------------------------------------------------------------------------
 
+// далее методы, доступные для py-объекта matrix
+// -----------------------------------------------------------------------------------------------------------------
+// печать матрицы
 PyObject *print_matrix(PyObject* a, PyObject *args)
 {
     matrix* v = (matrix*)a;
@@ -133,10 +147,12 @@ PyObject *print_matrix(PyObject* a, PyObject *args)
         }
         printf("\n");
     }
+    printf("\n");
     Py_INCREF(Py_None);
     return Py_None;
 }
 
+// заполнение матрицы из списка списков
 PyObject *fill_matrix(PyObject* a, PyObject *args)
 {
     Py_INCREF(Py_None);
@@ -185,6 +201,7 @@ PyObject *fill_matrix(PyObject* a, PyObject *args)
     return Py_None;
 }
 
+// выдача размеров матрицы
 PyObject *shape(PyObject* self, PyObject *args)
 {
     matrix* mat = (matrix*)self;

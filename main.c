@@ -1,6 +1,6 @@
 #include "main.h"
 
-
+// массив, содержащий определения всех функций модуля
 static PyMethodDef own_methods[] = {
     { "vector", new_vector, METH_VARARGS, "New vector" },
     { "matrix", new_matrix, METH_VARARGS, "New matrix" },
@@ -14,15 +14,16 @@ static PyMethodDef own_methods[] = {
     { "VminusV", VminusV, METH_VARARGS, "VminusV"  },
     { "VdotV", VdotV, METH_VARARGS, "VdotV"  },
     { "VxV", VxV, METH_VARARGS, "VxV"  },
-//    { "MxR", MxR, METH_VARARGS, "MxR"  },
-//    { "MplusM", MplusM, METH_VARARGS, "MplusM"  },
-//    { "MminusM", MminusM, METH_VARARGS, "MminusM"  },
-//    { "MxV", MxV, METH_VARARGS, "MxV"  },
-//    { "MxM", MxM, METH_VARARGS, "MxM"  },
-//    { "MRot", MRot, METH_VARARGS, "MRot"  },
+    { "MxR", MxR, METH_VARARGS, "MxR"  },
+    { "MplusM", MplusM, METH_VARARGS, "MplusM"  },
+    { "MminusM", MminusM, METH_VARARGS, "MminusM"  },
+    { "MxV", MxV, METH_VARARGS, "MxV"  },
+    { "MxM", MxM, METH_VARARGS, "MxM"  },
+    { "MRot", MRot, METH_VARARGS, "MRot"  },
     {NULL, NULL, 0, NULL}
 };
 
+// определение модуля
 static PyModuleDef simple_module = {
     PyModuleDef_HEAD_INIT,
     "vectors_and_matrices",
@@ -31,6 +32,7 @@ static PyModuleDef simple_module = {
     own_methods
 };
 
+// метод инициализации модуля
 PyMODINIT_FUNC PyInit_vectors_and_matrices(void)
 {
     PyObject* mod;

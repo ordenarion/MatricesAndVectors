@@ -1,5 +1,6 @@
 #include "vector.h"
 
+// методы, которые будут доступны у объекта vector
 PyMethodDef vector_methods[] = {
     {
         "print",
@@ -22,6 +23,7 @@ PyMethodDef vector_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+// определение типа vector_Type
 PyTypeObject vector_Type = {
     PyVarObject_HEAD_INIT(NULL, 0)
     .tp_name = "vector",
@@ -32,7 +34,7 @@ PyTypeObject vector_Type = {
     .tp_methods = vector_methods,
 };
 
-
+// вспомогательный метод для создания вектора
 vector* _new_vector(int length)
 {
     vector* v = PyObject_NEW(vector, &vector_Type);
@@ -40,12 +42,14 @@ vector* _new_vector(int length)
     return v;
 }
 
+// метод инициализации вектора
 void vector_init(vector* v, int length)
 {
     v->data = malloc(DSIZE * length);
     v->length = length;
 }
 
+// метод очистки вектора
 void vector_free(vector* v)
 {
     free(v->data);
@@ -53,12 +57,14 @@ void vector_free(vector* v)
     Py_TYPE(v)->tp_free((PyObject*)v);
 }
 
+// геттер элемента с индексом i
 double get_v_elem(vector* v, int i)
 {
     i = i%(v->length);
     return v->data[i];
 }
 
+// cеттер элемента с индексом i
 double set_v_elem(vector* v, int i, double elem)
 {
     i = i%(v->length);
@@ -67,6 +73,7 @@ double set_v_elem(vector* v, int i, double elem)
     return old_elem;
 }
 
+// функция, выдающая вектор, заполненный случайными числами
 vector* get_random_vec(int length, double l, double r)
 {
     vector* v = _new_vector(length);
@@ -77,6 +84,7 @@ vector* get_random_vec(int length, double l, double r)
     return v;
 }
 
+// функция, выдающая вектор, заполненный нулями
 vector* get_zero_vec(int length)
 {
     vector* v = _new_vector(length);
@@ -86,7 +94,9 @@ vector* get_zero_vec(int length)
     return v;
 }
 
+// далее методы инициализации объектов python
 // -----------------------------------------------------------------------------------------------------------------
+// нулевой вектор (по умолчанию будет нулевая)
 vector* new_vector(PyObject *self, PyObject *args)
 {
     int n;
@@ -95,6 +105,7 @@ vector* new_vector(PyObject *self, PyObject *args)
     return get_zero_vec(n);
 }
 
+// случайный вектор
 vector* rand_new_vector(PyObject *self, PyObject *args)
 {
     int n;
@@ -104,18 +115,21 @@ vector* rand_new_vector(PyObject *self, PyObject *args)
     return get_random_vec(n, l, r);
 }
 
+// далее методы, доступные для py-объекта vector
 // -----------------------------------------------------------------------------------------------------------------
+// печать вектора
 PyObject *print_vector(PyObject* a, PyObject *args)
 {
     vector* v = (vector*)a;
     for (int i = 0; i<v->length; ++i) {
         printf("%*f", 10, get_v_elem(v, i));
     }
-    printf("\n");
+    printf("\n\n");
     Py_INCREF(Py_None);
     return Py_None;
 }
 
+// заполнение вектора из списка
 PyObject *fill_vector(PyObject* a, PyObject *args)
 {
     Py_INCREF(Py_None);
@@ -153,6 +167,7 @@ PyObject *fill_vector(PyObject* a, PyObject *args)
     return Py_None;
 }
 
+// выдача размера вектора
 PyObject* len(PyObject* self, PyObject *args)
 {
     vector* v = (vector*)self;
